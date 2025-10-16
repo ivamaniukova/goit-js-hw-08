@@ -65,29 +65,21 @@ const images = [
 ];
 const container = document.querySelector(".gallery");
 
-   const galleryItems = images.map(({preview, original, description}) => {
-        const galleryItem = document.createElement("li");
-        galleryItem.classList.add("gallery-item");
+   const galleryItems = images.map(({preview, original, description})  => `
+      <li class="gallery-item">
+        <a class="gallery-link" href="${original}">
+          <img
+            class="gallery-image"
+            src="${preview}"
+            data-source="${original}"
+            alt="${description}"
+          />
+        </a>
+      </li>`
+  )
+  .join("");
 
-        const galleryLink = document.createElement("a");
-        galleryLink.classList.add("gallery-link");
-        galleryLink.href = original;
-
-        const galleryImage = document.createElement("img");
-        galleryImage.classList.add("gallery-image");
-        galleryImage.src = preview;
-        galleryImage.dataset.source = original;
-        galleryImage.alt = description;
-
-        galleryLink.appendChild(galleryImage);
-        galleryItem.appendChild(galleryLink);
-        return galleryItem;
-
-   });
-
-   galleryItems.forEach(galleryItem => {
-    container.appendChild(galleryItem);
-   });
+   container.insertAdjacentHTML("beforeend", galleryItems);
 
    container.addEventListener('click', handleModalOpen);
    
